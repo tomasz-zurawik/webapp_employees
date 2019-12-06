@@ -1,26 +1,35 @@
-<html>
+<%--<html>--%>
+<%--    <body>--%>
+<%--        <h2>--%>
+<%--            Hi!--%>
+<%--        </h2>--%>
+<%--        	<a href="empform">Add Employee</a> <br/>--%>
+<%--            <a href="viewemp">View Employees</a>--%>
+<%--    --%>
+<%--    </body>--%>
+
+<%--</html>--%>
 <style>
-    <%@include file="/WEB-INF/css/style.css" %>
+    body {background-image: url("http://bit.ly/2gPLxZ4");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
 </style>
-    <body>
-    <div class="container">
-        <h2>
-            Menu:
-        </h2>
-        	<a href="empform">Dodanie pracownika</a> <br/>
-            <a href="viewemp">Aktualna lista pracownikow</a>
-    </div>
-        <div class="purple"></div>
-        <div class="medium-blue"></div>
-        <div class="light-blue"></div>
-        <div class="red"></div>
-        <div class="orange"></div>
-        <div class="yellow"></div>
-        <div class="cyan"></div>
-        <div class="light-green"></div>
-        <div class="lime"></div>
-        <div class="magenta"></div>
-        <div class="lightish-red"></div>
-        <div class="pink"></div>
-    </body>
-</html>
+<body>
+<head>
+    <meta charset="utf-8">
+    <title>TABELA</title>
+    <style>
+        body{ padding: 1% 3%; color: rgb(23, 109, 119); }
+        h1{ color: #141527}
+        h2{color: darkgrey}
+    </style>
+</head>
+<h1> Arkusz Employees </h1>
+<h2>
+    <button> <a href="empform">Add Employee</a>  </button> </br> </br>
+
+    <button> <a href="viewemp">View Employees</a> </button>
+</h2>
+
