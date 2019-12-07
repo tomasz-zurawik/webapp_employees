@@ -3,6 +3,7 @@ package hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import java.util.List;
 
 public class HibernateDao {

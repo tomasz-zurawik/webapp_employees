@@ -14,7 +14,7 @@ public class MainHibernateDao {
 
         hibernateDao.save(employee);
 
-   /*   Cars cars = new Cars();
+        Cars cars = new Cars();
         cars.setEmployees(employee);
         cars.setModel("Fiat");
         cars.setName("Duży");
@@ -48,7 +48,6 @@ public class MainHibernateDao {
 
         hibernateDao.save(phones);
 
-   */
 
     }
 }

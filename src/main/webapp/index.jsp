@@ -24,3 +24,11 @@
         <div class="pink"></div>
     </body>
 </html>
+
+<%--
+<%@page import="employees.EmpController"%>
+<%
+   EmpController empCont = new EmpController();
+   empCont.addEmpList();
+%>
+--%>

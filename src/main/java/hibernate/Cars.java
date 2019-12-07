@@ -1,8 +1,6 @@
 package hibernate;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +8,7 @@ import java.util.Date;
 @Entity
 @Table(name = "Cars")
 @ToString
+@NoArgsConstructor
 public class Cars implements HibernateEntity  {
 
     @Id
@@ -35,8 +34,4 @@ public class Cars implements HibernateEntity  {
     @Getter @Setter
     @ToString.Exclude
     private Date registrationDate;
-
-    public Cars(){
-
-    }
 }
