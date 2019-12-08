@@ -19,8 +19,4 @@
             <page-encoding>UTF-8</page-encoding>
         </jsp-property-group>
     </jsp-config>
-    <!-- w komentarzach zostawiłem alternatywną konfigurację zamiast adnotacji -->
-    <listener>
-        <listener-class>hibernate.MainStartData</listener-class>
-    </listener>
 </web-app>

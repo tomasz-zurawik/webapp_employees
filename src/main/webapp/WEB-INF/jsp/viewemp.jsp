@@ -32,6 +32,7 @@
             <td>${emp.age}</td>
             <td>${emp.city}</td>
             <td>${emp.benefit}</td>
+            </td>
             <%-- <td>${emp.startJobDate}</td> --%>
             <td>
                 <form:form method="post" action="delete">
