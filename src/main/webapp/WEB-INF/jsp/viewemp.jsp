@@ -1,5 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <style>
     <%@include file="/WEB-INF/css/styleView.css" %>
 </style>
@@ -17,7 +19,7 @@
         <th>Wiek</th>
         <th>Miasto</th>
         <th>Benefity</th>
-        <%-- <th>Rozpoczęcie pracy</th> --%>
+        <th>Drukarki</th>
         <th>Akcja</th>
     </tr>
     <c:forEach var="emp" items="${list}">
@@ -32,8 +34,14 @@
             <td>${emp.age}</td>
             <td>${emp.city}</td>
             <td>${emp.benefit}</td>
+            <td><c:if test ="${fn:length(emp.printers) != 0}">
+                <select>
+                    <c:forEach var="printers" items="${emp.printers}">
+                		    <option>NAME: ${printers.name} MODEL: ${printers.model}</option>
+                    </c:forEach>
+                 </select>
+            </c:if>
             </td>
-            <%-- <td>${emp.startJobDate}</td> --%>
             <td>
                 <form:form method="post" action="delete">
                     <input type="hidden" id="id" name="id" value="${emp.id}"/>
@@ -52,22 +60,8 @@
             <input type="submit" class="button" name="test" value="test"/>
         </form:form>
     </td>
-
 </table>
 </div>
-
-<div class="purple"></div>
-<div class="medium-blue"></div>
-<div class="light-blue"></div>
-<div class="red"></div>
-<div class="orange"></div>
-<div class="yellow"></div>
-<div class="cyan"></div>
-<div class="light-green"></div>
-<div class="lime"></div>
-<div class="magenta"></div>
-<div class="lightish-red"></div>
-<div class="pink"></div>
 
 
 

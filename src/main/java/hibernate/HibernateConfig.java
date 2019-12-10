@@ -20,8 +20,8 @@ public class HibernateConfig {
                 settings.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 settings.put(Environment.URL, "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=CONNECTIS;integratedSecurity=true;");
 
-             /*   settings.put(Environment.USER, "user");
-                settings.put(Environment.PASS, "password");*/
+//              settings.put(Environment.USER, "user");
+//              settings.put(Environment.PASS, "password");*/
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");

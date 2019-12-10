@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Table(name = "Phones")
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Phones implements HibernateEntity {
 
     @Id
@@ -27,7 +28,5 @@ public class Phones implements HibernateEntity {
     @Column(name = "model")
     @NonNull
     private String model;
-
-    public Phones(){};
 }
 

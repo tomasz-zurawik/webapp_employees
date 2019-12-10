@@ -1,6 +1,6 @@
 package hibernate;
 
-public class MainStartData {
+public class MainStartingData {
     public static void main(String[] args) {
 
         HibernateDao hibernateDao = new HibernateDao();
@@ -30,7 +30,7 @@ public class MainStartData {
         emp3.addPrinters(printer3);
         hibernateDao.update(emp3);
 
-        //Obrazek zapisywanie do bazy danych
+        //Image zapisywanie do bazy danych
         hibernateDao.saveImageToDb("Photo", "png", "C:/Users/HP/Desktop/photo.png");
         hibernateDao.downloadImageFromDb("C:/Users/HP/Desktop/aaa", "png");
     }

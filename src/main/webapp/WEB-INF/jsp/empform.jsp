@@ -42,28 +42,10 @@
                     <td>Benefity :</td>
                     <td><form:input path="benefit"/></td>
                 </tr>
-          <%--      <tr>
-                    <td>Rozpoczęcie pracy :</td>
-                    <td><form:input path="startJobDate"/></td>
-                </tr> --%>
                 <tr>
                     <td></td>
                     <td><input type="submit" value="Zapisz"/></td>
                 </tr>
             </table>
         </form:form>
-
     </div>
-
-<div class="purple"></div>
-<div class="medium-blue"></div>
-<div class="light-blue"></div>
-<div class="red"></div>
-<div class="orange"></div>
-<div class="yellow"></div>
-<div class="cyan"></div>
-<div class="light-green"></div>
-<div class="lime"></div>
-<div class="magenta"></div>
-<div class="lightish-red"></div>
-<div class="pink"></div>

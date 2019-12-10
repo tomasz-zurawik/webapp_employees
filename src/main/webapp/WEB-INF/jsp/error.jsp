@@ -15,10 +15,5 @@
         h2{color: darkgrey}
     </style>
 </head>
-<h1> Arkusz Employees </h1>
-<h2>
-    <button> <a href="empform">Add Employee</a>  </button> </br> </br>
-
-    <button> <a href="viewemp">View Employees</a> </button>
-</h2>
+<h1> Straszny błąd - brak połączenia z bazą danych </h1>
 </body>

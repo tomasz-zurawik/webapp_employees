@@ -73,13 +73,14 @@ public class Employees implements HibernateEntity {
     @Getter @Setter
     private Set<Phones> phones;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "EmployeesWithPrinters",
             joinColumns = @JoinColumn(name = "Employee_ID"),
             inverseJoinColumns = @JoinColumn(name = "Printer_ID")
     )
     @ToString.Exclude
+    @Getter
     private Set<Printers> printers = new HashSet<>();
 
     public void addPrinters(Printers printer) {

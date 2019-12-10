@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.RequestDispatcher;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,13 +19,22 @@ public class EmpController {
 
     public EmpController() {
         employeeDao = new HibernateDao();
-        list = employeeDao.getEmployees();
         sb = new StringBuilder();
+        try {
+            list = employeeDao.getEmployees();
+        } catch (NullPointerException ex) {
+            ex.getMessage();
+            System.err.println("===========================================");
+            System.err.println("Błąd połączenia z bazą danych");
+            System.err.println("===========================================");
+        }
     }
 
     @RequestMapping("/empform")
     public ModelAndView showform() {
+        if (list != null)
         return new ModelAndView("empform", "command", new Employees());
+        return new ModelAndView("error");
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -46,14 +56,10 @@ public class EmpController {
             emp1.setSalary(employees.getSalary());
             emp1.setAge(employees.getAge());
             emp1.setBenefit(employees.getBenefit());
-            //emp1.setStartJobDate(employees.getStartJobDate());
             StringBuilder emailContent = sb.append("Witaj ").append(emp1.getFirstName()).append(" ").append(emp1.getLastName()).append(". Twoje dane zostały poprawnie zaktualizowane i dodane do bazy danych.");
             SendEmail.send(emailContent, emp1.getEmail());
             sb.setLength(0);
             employeeDao.update(emp1);
-            //  emp1.setDesignation(employees.getDesignation());
-            //  emp1.setName(employees.getName());
-            //  emp1.setSalary(employees.getSalary());
         }
         System.out.println(employees.getFirstName() + " " + employees.getSalary() + " " + employees.getLastName());
         return new ModelAndView("redirect:/viewemp");
@@ -73,6 +79,9 @@ public class EmpController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView edit(@RequestParam String id) {
         Employees employees = getEmployeesById(Integer.parseInt(id));
+        StringBuilder emailContent = sb.append("Witaj ").append(employees.getFirstName()).append(" ").append(employees.getLastName()).append(". Rozpocząłeś edycję swoich danych, jeżeli dane zostaną poprawnie zapisane zostaniesz o tym powiadomiony w osobnym mailu.");
+        SendEmail.send(emailContent, employees.getEmail());
+        sb.setLength(0);
         return new ModelAndView("empform", "command", employees);
     }
 
@@ -84,8 +93,11 @@ public class EmpController {
 
     @RequestMapping("/viewemp")
     public ModelAndView viewemp() {
-        list = employeeDao.getEmployees();
-        return new ModelAndView("viewemp", "list", list);
+        if (list != null) {
+            list = employeeDao.getEmployees();
+            return new ModelAndView("viewemp", "list", list);
+        }
+        return new ModelAndView("error");
     }
 
     private Employees getEmployeesById(@RequestParam int id) {
