@@ -31,7 +31,6 @@ public class HibernateConfig {
                 configuration.addAnnotatedClass(Phones.class);
                 configuration.addAnnotatedClass(Cars.class);
                 configuration.addAnnotatedClass(Printers.class);
-                configuration.addAnnotatedClass(Images.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             } catch (Exception e) {

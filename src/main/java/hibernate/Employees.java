@@ -1,8 +1,11 @@
 package hibernate;
 
 import lombok.*;
+import org.springframework.util.Base64Utils;
 
 import javax.persistence.*;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,6 +66,14 @@ public class Employees implements HibernateEntity {
     @Getter @Setter
     private String email;
 
+    @Column(name = "Image")
+    @Getter @Setter
+    private Blob image;
+
+    @Transient
+    @Getter @Setter
+    private String imgString;
+
     @OneToMany(mappedBy = "employees", orphanRemoval = true, fetch = FetchType.EAGER)
     @ToString.Exclude
     @Getter @Setter
@@ -70,7 +81,7 @@ public class Employees implements HibernateEntity {
 
     @OneToMany(mappedBy = "employees", orphanRemoval = true, fetch = FetchType.EAGER)
     @ToString.Exclude
-    @Getter @Setter
+    @Getter
     private Set<Phones> phones;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -91,5 +102,17 @@ public class Employees implements HibernateEntity {
     public void removePrinters(Printers printer) {
         this.printers.remove(printer);
         printer.getEmployees().remove(this);
+    }
+
+    public void setImgString(){
+        if (getImage() != null) {
+            byte[] imageByte = new byte[0];
+            try {
+                imageByte = getImage().getBytes(1, (int) getImage().length());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            imgString = Base64Utils.encodeToString(imageByte);
+        }
     }
 }

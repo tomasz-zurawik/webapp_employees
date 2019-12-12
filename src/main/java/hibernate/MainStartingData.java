@@ -1,5 +1,7 @@
 package hibernate;
 
+import java.sql.SQLException;
+
 public class MainStartingData {
     public static void main(String[] args) {
 
@@ -31,7 +33,6 @@ public class MainStartingData {
         hibernateDao.update(emp3);
 
         //Image zapisywanie do bazy danych
-        hibernateDao.saveImageToDb("Photo", "png", "C:/Users/HP/Desktop/photo.png");
-        hibernateDao.downloadImageFromDb("C:/Users/HP/Desktop/aaa", "png");
+        hibernateDao.saveImageToDb(emp1, "C:/Users/HP/Desktop/photo.png", "png");
     }
 }

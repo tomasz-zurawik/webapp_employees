@@ -43,6 +43,10 @@
                     <td><form:input path="benefit"/></td>
                 </tr>
                 <tr>
+                     <td>Dodaj zdjęcie :</td>
+                     <td><input type="file" id="file" name="file" accept="image/png, image/jpeg"></td>
+                </tr>
+                <tr>
                     <td></td>
                     <td><input type="submit" value="Zapisz"/></td>
                 </tr>

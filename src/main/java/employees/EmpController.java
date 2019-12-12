@@ -95,6 +95,8 @@ public class EmpController {
     public ModelAndView viewemp() {
         if (list != null) {
             list = employeeDao.getEmployees();
+            for (Employees emp : list)
+                emp.setImgString();
             return new ModelAndView("viewemp", "list", list);
         }
         return new ModelAndView("error");
