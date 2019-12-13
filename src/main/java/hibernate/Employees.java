@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "Employees")
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Employees implements HibernateEntity {
+public class Employees<filePathname> implements HibernateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,6 +74,14 @@ public class Employees implements HibernateEntity {
     @Getter @Setter
     private String imgString;
 
+    @Transient
+    @Getter @Setter
+    private String pathname;
+
+    @Transient
+    @Getter @Setter
+    private String fileImageFormat;
+
     @OneToMany(mappedBy = "employees", orphanRemoval = true, fetch = FetchType.EAGER)
     @ToString.Exclude
     @Getter @Setter
@@ -113,6 +121,21 @@ public class Employees implements HibernateEntity {
                 e.printStackTrace();
             }
             imgString = Base64Utils.encodeToString(imageByte);
+        }
+    }
+
+    public void splitPathname() {
+        if (pathname != null) {
+            char[] stringCharArray = pathname.toCharArray();
+            for (int i = 0; i < stringCharArray.length; i++) {
+                if (stringCharArray[i] == '.') {
+                    StringBuffer sb = new StringBuffer();
+                    for (int j = i+1; j < stringCharArray.length; j++) {
+                        sb.append(stringCharArray[j]);
+                    }
+                    setFileImageFormat(sb.toString());
+                }
+            }
         }
     }
 }

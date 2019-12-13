@@ -43,8 +43,9 @@
                     <td><form:input path="benefit"/></td>
                 </tr>
                 <tr>
-                     <td>Dodaj zdjęcie :</td>
-                     <td><input type="file" id="file" name="file" accept="image/png, image/jpeg"></td>
+                     <td>Pełna ścieżka do pliku zdjęcia<br></br>
+                     (w ścieżce stosuj znak "/" zamiast "\")</td>
+                     <td><form:input path="pathname"/></td>
                 </tr>
                 <tr>
                     <td></td>

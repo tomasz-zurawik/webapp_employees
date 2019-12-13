@@ -56,6 +56,9 @@ public class EmpController {
             emp1.setSalary(employees.getSalary());
             emp1.setAge(employees.getAge());
             emp1.setBenefit(employees.getBenefit());
+            emp1.setPathname(employees.getPathname());
+            emp1.splitPathname();
+            employeeDao.saveImageToDb(emp1);
             StringBuilder emailContent = sb.append("Witaj ").append(emp1.getFirstName()).append(" ").append(emp1.getLastName()).append(". Twoje dane zostały poprawnie zaktualizowane i dodane do bazy danych.");
             SendEmail.send(emailContent, emp1.getEmail());
             sb.setLength(0);

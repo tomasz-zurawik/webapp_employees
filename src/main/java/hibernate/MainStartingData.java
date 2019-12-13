@@ -31,8 +31,5 @@ public class MainStartingData {
         emp3.addPrinters(printer2);
         emp3.addPrinters(printer3);
         hibernateDao.update(emp3);
-
-        //Image zapisywanie do bazy danych
-        hibernateDao.saveImageToDb(emp1, "C:/Users/HP/Desktop/photo.png", "png");
     }
 }

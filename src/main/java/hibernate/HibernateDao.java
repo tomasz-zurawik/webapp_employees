@@ -55,11 +55,11 @@ public class HibernateDao {
         }
     }
 
-    public void saveImageToDb(Employees employee, String pathname, String imageFileFormat) {
+    public void saveImageToDb(Employees employee) {
         Transaction transaction = null;
         try (Session session = HibernateConfig.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            employee.setImage(BlobProxy.generateProxy(getFile(pathname, imageFileFormat)));
+            employee.setImage(BlobProxy.generateProxy(getFile(employee.getPathname(), employee.getFileImageFormat())));
             session.update(employee);
             transaction.commit();
         } catch (Exception e) {
