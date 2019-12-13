@@ -42,6 +42,9 @@ public class EmpController {
         if (employees.getId() < 1) {
             System.out.println("New emp");
             employees.setId(list.size() + 1);
+            employees.splitPathname();
+            employeeDao.saveImageToDb(employees);
+            employees.setImgString();
             list.add(employees);
             StringBuilder emailContent = sb.append("Witaj ").append(employees.getFirstName()).append(" ").append(employees.getLastName()).append(". Twoje dane zostały poprawnie dodane do bazy danych.");
             SendEmail.send(emailContent, employees.getEmail());
