@@ -55,13 +55,13 @@
                 </form:form>
             </td>
             <td>
-             <c:if test ="${emp.imgString == null}">
+             <c:if test ="${emp.imageAsBase64 == null}">
                 <form:form method="post" action="edit">
                     <input type="hidden" id="id" name="id" value="${emp.id}"/>
                     <input type="submit" class="button" name="Add photo" value="add photo"/>
                 </form:form>
              </c:if>
-             <c:if test ="${emp.imgString != null}"><img src="data:image;base64,${emp.imgString}" style="max-width: 150; height: auto;"></c:if>
+             <c:if test ="${emp.imageAsBase64 != null}"><img src="data:image;base64,${emp.imageAsBase64}" style="max-width: 150; height: auto;"></c:if>
             </td>
         </tr>
     </c:forEach>

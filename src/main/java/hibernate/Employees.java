@@ -3,7 +3,13 @@ package hibernate;
 import lombok.*;
 import org.springframework.util.Base64Utils;
 
+import javax.imageio.ImageIO;
 import javax.persistence.*;
+import javax.sql.rowset.serial.SerialBlob;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Date;
@@ -19,37 +25,44 @@ public class Employees<filePathname> implements HibernateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    @Getter @Setter
+    @Getter
+    @Setter
     private int id;
 
     @Column(name = "LastName")
     @NonNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private String lastName;
 
     @Column(name = "FirstName")
     @NonNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private String firstName;
 
     @Column(name = "Address")
     @NonNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private String address;
 
     @Column(name = "City")
     @NonNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private String city;
 
     @Column(name = "Salary")
     @NonNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private int salary;
 
     @Column(name = "Age")
     @NonNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private int age;
 
     @Column(name = "StartJobDate")
@@ -58,33 +71,40 @@ public class Employees<filePathname> implements HibernateEntity {
 
     @Column(name = "Benefit")
     @NonNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private int benefit;
 
     @Column(name = "Email")
     @NonNull
-    @Getter @Setter
+    @Getter
+    @Setter
     private String email;
 
     @Column(name = "Image")
-    @Getter @Setter
-    private Blob image;
+    @Getter
+    @Setter
+    private Blob imageAsBlob;
 
     @Transient
-    @Getter @Setter
-    private String imgString;
+    @Getter
+    @Setter
+    private String imageAsBase64;
 
     @Transient
-    @Getter @Setter
+    @Getter
+    @Setter
     private String pathname;
 
     @Transient
-    @Getter @Setter
-    private String fileImageFormat;
+    @Getter
+    @Setter
+    private String fileFormat;
 
     @OneToMany(mappedBy = "employees", orphanRemoval = true, fetch = FetchType.EAGER)
     @ToString.Exclude
-    @Getter @Setter
+    @Getter
+    @Setter
     private Set<Cars> cars;
 
     @OneToMany(mappedBy = "employees", orphanRemoval = true, fetch = FetchType.EAGER)
@@ -112,30 +132,62 @@ public class Employees<filePathname> implements HibernateEntity {
         printer.getEmployees().remove(this);
     }
 
-    public void setImgString(){
-        if (getImage() != null) {
-            byte[] imageByte = new byte[0];
-            try {
-                imageByte = getImage().getBytes(1, (int) getImage().length());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            imgString = Base64Utils.encodeToString(imageByte);
-        }
-    }
-
     public void splitPathname() {
         if (pathname != null) {
             char[] stringCharArray = pathname.toCharArray();
             for (int i = 0; i < stringCharArray.length; i++) {
                 if (stringCharArray[i] == '.') {
                     StringBuffer sb = new StringBuffer();
-                    for (int j = i+1; j < stringCharArray.length; j++) {
+                    for (int j = i + 1; j < stringCharArray.length; j++) {
                         sb.append(stringCharArray[j]);
                     }
-                    setFileImageFormat(sb.toString());
+                    setFileFormat(sb.toString());
                 }
             }
+        } else {
+            System.out.println("pathname == null");
+        }
+    }
+
+
+    public void createImageAsBlob() {
+        if (pathname != null) {
+            splitPathname();
+            byte[] imageAsBytes = getFile(this.pathname, this.fileFormat);
+            try {
+                setImageAsBlob(new SerialBlob(imageAsBytes));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public byte[] getFile(String pathname, String fileFormat) {
+        File file = new File(pathname);
+        if (file.exists()) {
+            try {
+                BufferedImage bufferedImage = ImageIO.read(file);
+                ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, fileFormat, byteOutStream);
+                return byteOutStream.toByteArray();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public void createImageAsBase64() {
+        if (getImageAsBlob() != null) {
+            byte[] imageByte = new byte[0];
+            try {
+                imageByte = getImageAsBlob().getBytes(1, (int) getImageAsBlob().length());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            imageAsBase64 = Base64Utils.encodeToString(imageByte);
+        } else {
+            System.out.println("imageAsBlob == null");
         }
     }
 }

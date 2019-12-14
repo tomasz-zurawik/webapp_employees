@@ -7,14 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.RequestDispatcher;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class EmpController {
-    private List<Employees> list;
     private HibernateDao employeeDao;
+    private List<Employees> list;
     private StringBuilder sb;
 
     public EmpController() {
@@ -43,13 +41,12 @@ public class EmpController {
             System.out.println("New emp");
             employees.setId(list.size() + 1);
             employees.splitPathname();
-            employeeDao.saveImageToDb(employees);
-            employees.setImgString();
-            list.add(employees);
+            employees.createImageAsBlob();
             StringBuilder emailContent = sb.append("Witaj ").append(employees.getFirstName()).append(" ").append(employees.getLastName()).append(". Twoje dane zostały poprawnie dodane do bazy danych.");
             SendEmail.send(emailContent, employees.getEmail());
             sb.setLength(0);
             employeeDao.save(employees);
+            list.add(employees);
         } else {
             Employees emp1 = getEmployeesById(employees.getId());
             emp1.setLastName(employees.getLastName());
@@ -61,11 +58,12 @@ public class EmpController {
             emp1.setBenefit(employees.getBenefit());
             emp1.setPathname(employees.getPathname());
             emp1.splitPathname();
-            employeeDao.saveImageToDb(emp1);
+            emp1.createImageAsBlob();
             StringBuilder emailContent = sb.append("Witaj ").append(emp1.getFirstName()).append(" ").append(emp1.getLastName()).append(". Twoje dane zostały poprawnie zaktualizowane i dodane do bazy danych.");
             SendEmail.send(emailContent, emp1.getEmail());
             sb.setLength(0);
             employeeDao.update(emp1);
+            list.add(emp1);
         }
         System.out.println(employees.getFirstName() + " " + employees.getSalary() + " " + employees.getLastName());
         return new ModelAndView("redirect:/viewemp");
@@ -74,7 +72,6 @@ public class EmpController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ModelAndView delete(@RequestParam String id) {
         Employees emp1 = getEmployeesById(Integer.parseInt(id));
-        list.remove(emp1);
         StringBuilder emailContent = sb.append("Witaj ").append(emp1.getFirstName()).append(" ").append(emp1.getLastName()).append(". Twoje dane zostały poprawnie usunięte z bazy danych.");
         SendEmail.send(emailContent, emp1.getEmail());
         sb.setLength(0);
@@ -101,8 +98,8 @@ public class EmpController {
     public ModelAndView viewemp() {
         if (list != null) {
             list = employeeDao.getEmployees();
-            for (Employees emp : list)
-                emp.setImgString();
+            for (Employees e : list)
+                e.createImageAsBase64();
             return new ModelAndView("viewemp", "list", list);
         }
         return new ModelAndView("error");

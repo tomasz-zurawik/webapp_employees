@@ -3,12 +3,10 @@ package hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.engine.jdbc.BlobProxy;
-import org.springframework.util.Base64Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.sql.SQLException;
 import java.util.List;
 
 public class HibernateDao {
@@ -53,36 +51,6 @@ public class HibernateDao {
             }
             e.printStackTrace();
         }
-    }
-
-    public void saveImageToDb(Employees employee) {
-        Transaction transaction = null;
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            employee.setImage(BlobProxy.generateProxy(getFile(employee.getPathname(), employee.getFileImageFormat())));
-            session.update(employee);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
-
-    public byte[] getFile(String pathname, String imageFileFormat) {
-        File file = new File(pathname);
-        if(file.exists()){
-            try {
-                BufferedImage bufferedImage = ImageIO.read(file);
-                ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, imageFileFormat, byteOutStream);
-                return byteOutStream.toByteArray();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
     }
 
     public List<Employees> getEmployees() {

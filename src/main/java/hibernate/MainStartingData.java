@@ -21,7 +21,7 @@ public class MainStartingData {
         hibernateDao.save(printer2);
         hibernateDao.save(printer3);
 
-        //Dodawanie realcji ManyToMany do bazy - działa
+        //Dodawanie realcji ManyToMany do bazy
         Employees emp4 = new Employees("Test4", "Test4", "Test4", "Test4", 4000, 18, 1, "bik3r94@gmail.com");
         emp4.addPrinters(printer1);
         hibernateDao.save(emp4);
